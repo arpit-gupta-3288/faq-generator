@@ -1,0 +1,318 @@
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  animation: fadeIn 0.35s ease;
+}
+
+.metaBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.metaLeft { flex: 1; min-width: 0; }
+
+.metaUrl {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.metaTime {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.metaActions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 6px 12px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.actionBtn:hover { border-color: var(--border-hover); color: var(--text-primary); }
+
+.statsRow {
+  display: flex;
+  gap: 1px;
+  border-bottom: 1px solid var(--border);
+}
+
+.statCard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 8px;
+  gap: 3px;
+  background: var(--bg-elevated);
+}
+.statCard + .statCard { border-left: 1px solid var(--border); }
+
+.statVal {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.tabBar {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+}
+
+.tab {
+  font-size: 13px;
+  padding: 12px 0;
+  margin-right: 24px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: all var(--transition);
+  margin-bottom: -1px;
+}
+.tab:hover { color: var(--text-secondary); }
+.tabActive { color: var(--text-primary); border-bottom-color: var(--accent); }
+
+.cardsView { padding: 16px 20px; }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.filterPills { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.filterPill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 5px 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.filterPill:hover { border-color: var(--border-hover); color: var(--text-primary); }
+.filterPillActive {
+  border-color: var(--accent-border);
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+.filterCount {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 5px;
+  border-radius: 8px;
+}
+
+.toolbarRight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.searchInput {
+  width: 180px;
+  font-size: 12px;
+  padding: 6px 10px;
+}
+
+.iconBtn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-tertiary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.iconBtn:hover { border-color: var(--border-hover); color: var(--text-secondary); }
+
+.category { margin-bottom: 20px; }
+
+.catHeader {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.faqCard {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 6px;
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+.faqCard:hover { border-color: var(--border-hover); }
+
+.faqHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.faqQ {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.faqMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+}
+
+.priorityBadge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.gapBadge {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  background: var(--amber-dim);
+  border: 1px solid rgba(212,144,58,0.2);
+  color: var(--amber);
+  white-space: nowrap;
+}
+
+.chevron {
+  color: var(--text-tertiary);
+  transition: transform var(--transition);
+  display: flex;
+  align-items: center;
+}
+.chevronOpen { transform: rotate(180deg); }
+
+.faqBody {
+  padding: 0 14px 13px;
+  border-top: 1px solid var(--border);
+  animation: fadeIn 0.15s ease;
+}
+
+.faqAnswer {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding-top: 12px;
+  margin-bottom: 12px;
+}
+
+.faqFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sources { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.sourcePill {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-tertiary);
+}
+
+.gapList {
+  font-size: 11px;
+  color: var(--amber);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gapIcon { font-size: 12px; }
+
+.noResults {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  text-align: center;
+  padding: 32px;
+}
+
+.jsonView {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.jsonBlock {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding: 20px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.65;
+  margin: 0;
+}
