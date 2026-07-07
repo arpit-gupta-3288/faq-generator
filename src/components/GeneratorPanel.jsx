@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { scrapeUrl, scrapeReraData, generateFAQs } from '../utils/claude.js'
+import { scrapeUrl, scrapeReraData, generateQuestionDrafts } from '../utils/claude.js'
 import styles from './GeneratorPanel.module.css'
 
 const PRIORITY_OPTIONS = [
@@ -8,9 +8,9 @@ const PRIORITY_OPTIONS = [
   { value: 'low', label: 'Low', color: '#8a8794' },
 ]
 
-export function GeneratorPanel({ onGenerated, onGenerating, onLog, onClear, hasResults }) {
+export function GeneratorPanel({ onQuestionsGenerated, onGenerating, onLog, onStepResult, onClear, phase }) {
   const [url, setUrl] = useState('')
-  const [count, setCount] = useState(10)
+  const count = 40
   const [priorities, setPriorities] = useState(['high', 'medium', 'low'])
   const [extraContext, setExtraContext] = useState('')
   const [loading, setLoading] = useState(false)
@@ -55,30 +55,31 @@ export function GeneratorPanel({ onGenerated, onGenerating, onLog, onClear, hasR
         addLog('RERA portal data not available — AI will flag gaps', 'done')
       }
 
-      addLog(`Generating ${count} FAQs with Claude…`, 'active')
+      addLog('Orchestrating 40 search-optimized questions with Claude…', 'active')
 
-      const faqs = await generateFAQs({
+      const { projectKB, questions } = await generateQuestionDrafts({
         url: url.trim(),
         pageContent,
         reraData,
-        count,
         priorities,
         extraContext: extraContext.trim(),
+        onLog: (text, status) => addLog(text, status),
+        onStepResult
       })
 
-      addLog(`${faqs.length} FAQs generated`, 'done')
+      addLog('40 questions curated successfully!', 'done')
 
       const urlObj = (() => { try { return new URL(url.trim()) } catch { return null } })()
       const meta = {
         url: url.trim(),
         domain: urlObj?.hostname || url,
-        count: faqs.length,
+        count: questions.length,
         generatedAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
         priorities,
         extraContext: extraContext.trim(),
       }
 
-      onGenerated({ faqs, meta })
+      onQuestionsGenerated({ questions, projectKB, meta })
     } catch (err) {
       setError(err.message || "Something went wrong. Ensure 'npm run server' is running and ANTHROPIC_API_KEY is set in .env")
       addLog('Error: ' + (err.message || 'Unknown error'), 'error')
@@ -116,32 +117,11 @@ export function GeneratorPanel({ onGenerated, onGenerating, onLog, onClear, hasR
       <div className={styles.section}>
         <label className={styles.label}>
           <span className={styles.stepNum}>2</span>
-          Number of FAQs
-          <span className={styles.countBadge}>{count}</span>
+          FAQ Scale
+          <span className={styles.countBadge}>40 FAQs</span>
         </label>
-        <div className={styles.sliderRow}>
-          <span className={styles.sliderBound}>5</span>
-          <input
-            type="range"
-            min="5"
-            max="20"
-            step="1"
-            value={count}
-            onChange={e => setCount(Number(e.target.value))}
-            disabled={loading}
-            className={styles.slider}
-          />
-          <span className={styles.sliderBound}>20</span>
-        </div>
-        <div className={styles.sliderTicks}>
-          {[5,8,10,12,15,18,20].map(n => (
-            <button
-              key={n}
-              className={`${styles.tick} ${count === n ? styles.tickActive : ''}`}
-              onClick={() => setCount(n)}
-              disabled={loading}
-            >{n}</button>
-          ))}
+        <div style={{ fontSize: '12.5px', color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: '6px' }}>
+          Strict distribution of exactly 10 questions per target category: <strong>About Project, Location, Pricing</strong>, and <strong>NoBroker Services</strong>.
         </div>
       </div>
 
@@ -198,19 +178,19 @@ export function GeneratorPanel({ onGenerated, onGenerating, onLog, onClear, hasR
       <button
         className={styles.generateBtn}
         onClick={handleGenerate}
-        disabled={loading || !url.trim()}
+        disabled={loading || !url.trim() || phase === 'questions' || phase === 'answers'}
       >
-        {loading ? (
+        {loading || phase === 'questions' || phase === 'answers' ? (
           <>
             <span className={styles.btnSpinner} />
-            Generating…
+            Orchestrating Questions…
           </>
         ) : (
           <>
             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M7.5 1v13M1 7.5h13" strokeLinecap="round"/>
             </svg>
-            Generate {count} FAQs
+            Orchestrate 40 Questions
           </>
         )}
       </button>

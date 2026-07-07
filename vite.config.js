@@ -5,26 +5,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
+    allowedHosts: true,
     proxy: {
-      '/api/scrape': {
-        target: 'https://api.allorigins.win',
+      '/api': {
+        target: 'http://localhost:3002',
         changeOrigin: true,
-        rewrite: (path) => path.replace('/api/scrape', '/get'),
-      },
-      '/api/claude': {
-        target: 'https://api.anthropic.com',
-        changeOrigin: true,
-        rewrite: (path) => '/v1/messages',
-        configure: (proxy) => {
-          proxy.on('proxyReq', (proxyReq, req) => {
-            const apiKey = req.headers['x-api-key-forward']
-            if (apiKey) {
-              proxyReq.setHeader('x-api-key', apiKey)
-              proxyReq.removeHeader('x-api-key-forward')
-            }
-            proxyReq.setHeader('anthropic-version', '2023-06-01')
-          })
-        }
+        secure: false,
       }
     }
   }

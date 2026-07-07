@@ -64,6 +64,21 @@
   gap: 16px;
 }
 
+.newBtn {
+  background: var(--accent);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px rgba(139, 105, 20, 0.2);
+}
+
+.newBtn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
 .poweredBy {
   font-size: 11px;
   color: var(--text-tertiary);
@@ -110,10 +125,25 @@
   grid-template-columns: 420px 1fr;
   gap: 24px;
   align-items: start;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.layoutResults {
+  grid-template-columns: 0px 1fr;
+  gap: 0;
+}
+
+.layoutResults .left {
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  margin-right: -24px;
 }
 
 @media (max-width: 900px) {
   .layout { grid-template-columns: 1fr; }
+  .layoutResults { grid-template-columns: 1fr; }
+  .layoutResults .left { display: none; }
   .main { padding: 32px 20px 60px; }
   .headerInner { padding: 0 20px; }
 }
@@ -136,6 +166,337 @@
   justify-content: center;
   gap: 24px;
   background: var(--bg-card);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Question Review Workspace */
+.reviewContainer {
+  width: 100%;
+  max-width: 900px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.reviewHeader {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.reviewTitle {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.reviewDesc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.reviewList {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 12px;
+  margin-bottom: 40px;
+}
+
+.reviewList::-webkit-scrollbar { width: 4px; }
+.reviewList::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.reviewCategory {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reviewCatTitle {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.reviewCatCount {
+  background: var(--accent-dim);
+  color: var(--accent);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+}
+
+.reviewQuestionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 12px;
+}
+
+.reviewQuestionItem {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.reviewQuestionItem:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+}
+
+.reviewQuestionNum {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  width: 20px;
+  padding-top: 2px;
+}
+
+.reviewQuestionText {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.reviewActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.confirmBtn {
+  display: flex;
+  align-items: center;
+  background: var(--accent);
+  color: white;
+  border: 1px solid var(--accent);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(224, 92, 92, 0.2);
+}
+
+.confirmBtn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(224, 92, 92, 0.3);
+}
+
+.cancelBtn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelBtn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+/* Pipeline UI Styles */
+.pipeline {
+  width: 100%;
+  max-width: 500px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.pipelineHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.spinnerRingSmall {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--accent-dim);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.stepsList {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepItem {
+  display: flex;
+  gap: 16px;
+  position: relative;
+  padding-bottom: 24px;
+}
+
+.stepItem:last-child {
+  padding-bottom: 0;
+}
+
+.stepConnector {
+  position: absolute;
+  left: 13px;
+  top: 28px;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+  z-index: 1;
+}
+
+.stepDone .stepConnector {
+  background: var(--accent);
+}
+
+.stepItem:last-child .stepConnector {
+  display: none;
+}
+
+.stepIndicator {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.stepActive .stepIndicator {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-dim);
+  animation: activePulse 2s infinite;
+}
+
+.stepDone .stepIndicator {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.stepMain {
+  flex: 1;
+  padding-top: 4px;
+}
+
+.stepHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.stepLabel {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 2px;
+  transition: color 0.3s ease;
+}
+
+.stepActive .stepLabel, .stepDone .stepLabel {
+  color: var(--text-primary);
+}
+
+.stepDesc {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+.viewOutputBtn {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid rgba(224, 92, 92, 0.1);
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.viewOutputBtn:hover {
+  background: rgba(224, 92, 92, 0.15);
+}
+
+.stepResultPreview {
+  margin-top: 12px;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  animation: slideDown 0.3s ease-out;
+}
+
+.stepResultPreview pre {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 250px;
+  overflow-y: auto;
+  line-height: 1.6;
+}
+
+@keyframes activePulse {
+  0% { box-shadow: 0 0 0 0 rgba(224, 92, 92, 0.3); }
+  70% { box-shadow: 0 0 0 6px rgba(224, 92, 92, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(224, 92, 92, 0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .emptyGrid {

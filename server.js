@@ -8,7 +8,7 @@ import Anthropic from '@anthropic-ai/sdk';
 dotenv.config();
 
 const app = express();
-const port = 3001;
+const port = 3002;
 
 app.use(cors());
 app.use(express.json());
@@ -63,12 +63,21 @@ app.post('/api/generate', async (req, res) => {
   try {
     const message = await anthropic.messages.create({
       model: 'smart-router',
-      max_tokens: 4000,
+      max_tokens: 8192,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }],
+      headers: {
+        'anthropic-beta': 'max-tokens-3-5-sonnet-2024-07-15'
+      }
     });
+    console.log('DEBUG API Message:', JSON.stringify(message));
 
-    const raw = message.content[0].text || '';
+    let raw = '';
+    if (message && message.content && message.content[0]) {
+      raw = message.content[0].text || '';
+    } else {
+      console.warn('Warning: Anthropic API returned empty content. Message object:', JSON.stringify(message));
+    }
     res.json({ raw });
   } catch (error) {
     console.error('Anthropic API error:', error);

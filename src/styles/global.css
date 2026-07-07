@@ -12,6 +12,7 @@
   --text-secondary: #5a5870;
   --text-tertiary: #9a98a8;
   --accent: #8b6914;
+  --accent-hover: #a67d18;
   --accent-dim: rgba(139,105,20,0.08);
   --accent-border: rgba(139,105,20,0.25);
   --green: #2e7d5a;
@@ -30,7 +31,7 @@
   --transition: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-html { font-size: 16px; }
+html { font-size: 18px; }
 
 body {
   font-family: var(--font-body);
